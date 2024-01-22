@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8or-osy-ppl-pkg-nk8-usr-ebs-1900-10-dpl-dev
+  labels:
+    name: k8or-osy-ppl-pkg-nk8-usr-ebs-dpl-1900-10-lab-dev
+spec:
+
+  # --- Deployment spec ---
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8or-osy-ppl-pkg-nk8-usr-ebs-mch-1900-10-lab-dev
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+
+  # --- Pod template ---
+  template:
+    metadata:
+      labels:
+        app: k8or-osy-ppl-pkg-nk8-usr-ebs-mch-1900-10-lab-dev
+    spec:
+      # --- Pod spec ---
+      containers:
+      - image: barbrock/k8or-osy-img-dkr-2040-10-rep-k8d:img03-v0-0-01
+        imagePullPolicy: Always
+        name: k8or-osy-ppl-pkg-nk8-usr-ebs-1900-10-cnt-dev
+        ports:
+        - name: k8or-osy-stm
+          containerPort: 80
+        command: ["/bin/sh"]
+        args:
+          - "-c"
+          - "while true; do echo $(date -u) >> /mnt/out.txt; sleep 5; done"
+        volumeMounts:
+        - name: persistent-storage
+          mountPath: /mnt
+      volumes:
+      - name: persistent-storage
+        persistentVolumeClaim:
+          claimName: k8or-osy-ppl-pkg-nk8-usr-ebs-1900-10-pvc-dev

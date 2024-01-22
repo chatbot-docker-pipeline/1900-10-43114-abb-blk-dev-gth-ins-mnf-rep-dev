@@ -1,0 +1,6 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: k8or-osy-ppl-pkg-nk8-usr-ebs-1900-10-stc-dev
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer

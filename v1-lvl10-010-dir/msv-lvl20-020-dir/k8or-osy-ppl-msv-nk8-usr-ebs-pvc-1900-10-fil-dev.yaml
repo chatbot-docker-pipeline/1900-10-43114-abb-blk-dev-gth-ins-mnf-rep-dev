@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: k8or-osy-ppl-msv-nk8-usr-ebs-1900-10-pvc-dev
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: k8or-osy-ppl-msv-nk8-usr-ebs-1900-10-stc-dev
+  resources:
+    requests:
+      storage: 1Gi
